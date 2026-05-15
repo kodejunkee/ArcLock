@@ -26,7 +26,11 @@
       },
       "edgeToEdgeEnabled": true,
       "package": "com.arclock.app",
-      "permissions": ["CAMERA"]
+      "permissions": [
+        "CAMERA",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -40,6 +44,11 @@
           "cameraPermission": "ArcLock needs camera access for facial biometric authentication."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "3b51fd80-9025-4185-9aba-a74ba46bec94"
+      }
+    }
   }
 }
