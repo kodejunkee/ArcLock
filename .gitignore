@@ -1,0 +1,66 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node.js Backend
+backend/dist/
+backend/node_modules/
+
+# Python
+python-face-service/venv/
+python-face-service/.venv/
+python-face-service/__pycache__/
+*.pyc
+
+# DeepFace model weights (downloaded at runtime)
+.deepface/
+
+# Mobile App
+mobile-app/node_modules/
+mobile-app/.expo/
+mobile-app/dist/
+mobile-app/ios/
+mobile-app/android/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Misc
+*.tgz
+.cache/
