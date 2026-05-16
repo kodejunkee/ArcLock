@@ -11,7 +11,7 @@ import { logger } from '../utils/logger';
 // Create dedicated Axios instance for the face service
 const faceClient: AxiosInstance = axios.create({
   baseURL: env.FACE_SERVICE_URL,
-  timeout: 30000, // 30 second timeout (face processing can be slow)
+  timeout: 120000, // 120 second timeout (first request downloads detector model)
   headers: {
     'Content-Type': 'application/json',
   },

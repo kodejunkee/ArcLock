@@ -92,61 +92,63 @@ export const CameraCaptureScreen: React.FC<Props> = ({
 
   return (
     <View style={styles.container}>
+      {/* Camera fills the background — no children inside CameraView */}
       <CameraView
         ref={cameraRef}
         style={styles.camera}
         facing={facing}
         mirror={true}
-      >
-        <FaceGuideOverlay
-          instruction={
-            mode === 'register'
-              ? 'Position your face for enrollment'
-              : 'Position your face for verification'
+      />
+
+      {/* All UI overlaid on top using absolute positioning */}
+      <FaceGuideOverlay
+        instruction={
+          mode === 'register'
+            ? 'Position your face for enrollment'
+            : 'Position your face for verification'
+        }
+        isProcessing={isCapturing}
+      />
+
+      {/* Top bar */}
+      <View style={styles.topBar}>
+        <TouchableOpacity
+          style={styles.backBtn}
+          onPress={() => navigation.goBack()}
+        >
+          <Ionicons name="arrow-back" size={24} color="#fff" />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.flipBtn}
+          onPress={() =>
+            setFacing((prev) => (prev === 'front' ? 'back' : 'front'))
           }
-          isProcessing={isCapturing}
-        />
+        >
+          <Ionicons name="camera-reverse-outline" size={24} color="#fff" />
+        </TouchableOpacity>
+      </View>
 
-        {/* Top bar */}
-        <View style={styles.topBar}>
-          <TouchableOpacity
-            style={styles.backBtn}
-            onPress={() => navigation.goBack()}
-          >
-            <Ionicons name="arrow-back" size={24} color="#fff" />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.flipBtn}
-            onPress={() =>
-              setFacing((prev) => (prev === 'front' ? 'back' : 'front'))
-            }
-          >
-            <Ionicons name="camera-reverse-outline" size={24} color="#fff" />
-          </TouchableOpacity>
-        </View>
-
-        {/* Capture button */}
-        <View style={styles.captureContainer}>
-          <TouchableOpacity
-            style={[styles.captureBtn, isCapturing && styles.captureBtnDisabled]}
-            onPress={handleCapture}
-            disabled={isCapturing}
-            activeOpacity={0.7}
-          >
-            <View style={styles.captureInner}>
-              {isCapturing ? (
-                <Ionicons name="hourglass" size={28} color={COLORS.primary} />
-              ) : (
-                <Ionicons name="scan" size={28} color="#fff" />
-              )}
-            </View>
-          </TouchableOpacity>
-          <Text style={styles.captureLabel}>
-            {isCapturing ? 'Capturing...' : 'Tap to capture'}
-          </Text>
-        </View>
-      </CameraView>
+      {/* Capture button */}
+      <View style={styles.captureContainer}>
+        <TouchableOpacity
+          style={[styles.captureBtn, isCapturing && styles.captureBtnDisabled]}
+          onPress={handleCapture}
+          disabled={isCapturing}
+          activeOpacity={0.7}
+        >
+          <View style={styles.captureInner}>
+            {isCapturing ? (
+              <Ionicons name="hourglass" size={28} color={COLORS.primary} />
+            ) : (
+              <Ionicons name="scan" size={28} color="#fff" />
+            )}
+          </View>
+        </TouchableOpacity>
+        <Text style={styles.captureLabel}>
+          {isCapturing ? 'Capturing...' : 'Tap to capture'}
+        </Text>
+      </View>
     </View>
   );
 };
@@ -157,7 +159,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.bg.primary,
   },
   camera: {
-    flex: 1,
+    ...StyleSheet.absoluteFillObject,
   },
   topBar: {
     position: 'absolute',

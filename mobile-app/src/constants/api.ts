@@ -3,7 +3,7 @@
  */
 
 // Change this to your backend URL when deploying
-export const API_BASE_URL = 'http://localhost:5000';
+export const API_BASE_URL = 'http://10.186.14.13:5000';
 
 export const API_ENDPOINTS = {
   // Auth
@@ -26,4 +26,4 @@ export const API_ENDPOINTS = {
   HEALTH: '/health',
 } as const;
 
-export const API_TIMEOUT = 30000; // 30 seconds
+export const API_TIMEOUT = 120000; // 120 seconds (first request downloads ML models)

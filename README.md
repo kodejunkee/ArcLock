@@ -1,8 +1,9 @@
 <p align="center">
+  <img src="mobile-app/assets/icon.png" width="128" height="128" alt="ArcLock Logo"/><br/>
   <img src="https://img.shields.io/badge/ArcLock-Biometric_Auth-00D4AA?style=for-the-badge&logo=shield&logoColor=white" alt="ArcLock"/>
 </p>
 
-<h1 align="center">🔒 ArcLock</h1>
+<h1 align="center">ArcLock</h1>
 
 <p align="center">
   <b>Secure Facial Biometric Authentication System</b><br/>

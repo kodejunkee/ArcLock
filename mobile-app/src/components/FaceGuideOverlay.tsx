@@ -24,7 +24,7 @@ export const FaceGuideOverlay: React.FC<FaceGuideOverlayProps> = ({
   const borderAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    // Pulsing animation for the oval border
+    // Pulsing scale animation (native driver — runs on UI thread)
     const pulse = Animated.loop(
       Animated.sequence([
         Animated.timing(pulseAnim, {
@@ -40,7 +40,7 @@ export const FaceGuideOverlay: React.FC<FaceGuideOverlayProps> = ({
       ])
     );
 
-    // Color cycling for the border
+    // Color cycling for the border (JS driver — needed for color interpolation)
     const colorCycle = Animated.loop(
       Animated.sequence([
         Animated.timing(borderAnim, {
@@ -71,7 +71,7 @@ export const FaceGuideOverlay: React.FC<FaceGuideOverlayProps> = ({
   });
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} pointerEvents="none">
       {/* Semi-transparent overlay with cutout */}
       <View style={styles.overlay}>
         {/* Top section */}
@@ -83,20 +83,26 @@ export const FaceGuideOverlay: React.FC<FaceGuideOverlayProps> = ({
 
         {/* Middle section with oval cutout */}
         <View style={styles.middleSection}>
+          {/* Outer node: native-driven scale animation */}
           <Animated.View
             style={[
-              styles.ovalGuide,
-              {
-                transform: [{ scale: pulseAnim }],
-                borderColor: borderColor,
-              },
+              styles.ovalScaleWrapper,
+              { transform: [{ scale: pulseAnim }] },
             ]}
           >
-            {/* Corner markers */}
-            <View style={[styles.corner, styles.topLeft]} />
-            <View style={[styles.corner, styles.topRight]} />
-            <View style={[styles.corner, styles.bottomLeft]} />
-            <View style={[styles.corner, styles.bottomRight]} />
+            {/* Inner node: JS-driven border color animation */}
+            <Animated.View
+              style={[
+                styles.ovalGuide,
+                { borderColor: borderColor },
+              ]}
+            >
+              {/* Corner markers */}
+              <View style={[styles.corner, styles.topLeft]} />
+              <View style={[styles.corner, styles.topRight]} />
+              <View style={[styles.corner, styles.bottomLeft]} />
+              <View style={[styles.corner, styles.bottomRight]} />
+            </Animated.View>
           </Animated.View>
         </View>
 
@@ -138,9 +144,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 30,
   },
-  ovalGuide: {
+  ovalScaleWrapper: {
     width: OVAL_WIDTH,
     height: OVAL_HEIGHT,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  ovalGuide: {
+    width: '100%',
+    height: '100%',
     borderRadius: OVAL_WIDTH / 2,
     borderWidth: 2.5,
     justifyContent: 'center',
